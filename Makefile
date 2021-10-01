@@ -5,7 +5,6 @@
 LIBNAME		:= ccoll
 VERSION		:= 0.1.0
 
-MAKEFILE = gba.mk
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
@@ -89,7 +88,7 @@ export DEPSDIR	:=	$(CURDIR)/build
 $(BUILD):
 	@[ -d lib ] || mkdir -p lib
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/$(MAKEFILE)
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 clean:
 	@echo clean ...

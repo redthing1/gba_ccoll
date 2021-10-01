@@ -974,7 +974,7 @@ static enum cc_stat expand_capacity(CC_Deque *deque)
  *
  * @return the nearest upper power of two
  */
-static INLINE size_t upper_pow_two(size_t n)
+static CC_INLINE size_t upper_pow_two(size_t n)
 {
     if (n >= MAX_POW_TWO)
         return MAX_POW_TWO;

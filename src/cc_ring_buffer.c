@@ -7,7 +7,7 @@
  */
 
 
-#include "include/cc_ring_buffer.h"
+#include "cc_ring_buffer.h"
 
 
 struct ring_buffer_conf {

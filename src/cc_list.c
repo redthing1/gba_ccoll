@@ -1147,7 +1147,7 @@ static Node *split(CC_List *list, Node *b, size_t size, int (*cmp) (void const*,
  *@param[in]      r_size size of the right partition
  *@param[in]      cmp    the comparator function
  */
-static INLINE void merge(Node **left, Node **right, size_t l_size,
+static CC_INLINE void merge(Node **left, Node **right, size_t l_size,
                         size_t r_size, int (*cmp) (void const*, void const*))
 {
     size_t size = r_size + l_size;

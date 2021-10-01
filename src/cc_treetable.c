@@ -46,9 +46,9 @@ static void rebalance_after_delete (CC_TreeTable *table, RBNode *n);
 static void remove_node            (CC_TreeTable *table, RBNode *z);
 static void tree_destroy           (CC_TreeTable *table, RBNode *s);
 
-static INLINE void  transplant     (CC_TreeTable *table, RBNode *u, RBNode *v);
-static INLINE RBNode *tree_min     (CC_TreeTable const * const table, RBNode *n);
-static INLINE RBNode *tree_max     (CC_TreeTable const * const table, RBNode *n);
+static CC_INLINE void  transplant     (CC_TreeTable *table, RBNode *u, RBNode *v);
+static CC_INLINE RBNode *tree_min     (CC_TreeTable const * const table, RBNode *n);
+static CC_INLINE RBNode *tree_max     (CC_TreeTable const * const table, RBNode *n);
 
 static RBNode *get_tree_node_by_key(CC_TreeTable const * const table, const void *key);
 static RBNode *get_successor_node  (CC_TreeTable const * const table, RBNode *x);
@@ -529,7 +529,7 @@ static void rebalance_after_delete(CC_TreeTable *table, RBNode *x)
     x->color = RB_BLACK;
 }
 
-static INLINE void transplant(CC_TreeTable *table, RBNode *u, RBNode *v)
+static CC_INLINE void transplant(CC_TreeTable *table, RBNode *u, RBNode *v)
 {
     if (u->parent == table->sentinel)
         table->root = v;
@@ -541,7 +541,7 @@ static INLINE void transplant(CC_TreeTable *table, RBNode *u, RBNode *v)
     v->parent = u->parent;
 }
 
-static INLINE RBNode *tree_min(CC_TreeTable const * const table, RBNode *n)
+static CC_INLINE RBNode *tree_min(CC_TreeTable const * const table, RBNode *n)
 {
     RBNode *s = table->sentinel;
 
@@ -550,7 +550,7 @@ static INLINE RBNode *tree_min(CC_TreeTable const * const table, RBNode *n)
     return n;
 }
 
-static INLINE RBNode *tree_max(CC_TreeTable const * const table, RBNode *n)
+static CC_INLINE RBNode *tree_max(CC_TreeTable const * const table, RBNode *n)
 {
     RBNode *s = table->sentinel;
 

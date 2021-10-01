@@ -443,7 +443,7 @@ enum cc_stat cc_slist_splice_at(CC_SList *list1, CC_SList *list2, size_t index)
  * @param[in] left the node after which the elements are being added
  * @param[in] right the node behind which the elements are being added
  */
-static INLINE void splice_between(CC_SList *l1, CC_SList *l2, SNode *base, SNode *end)
+static CC_INLINE void splice_between(CC_SList *l1, CC_SList *l2, SNode *base, SNode *end)
 {
     if (!base) {
         l2->tail->next = l1->head;

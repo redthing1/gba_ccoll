@@ -51,13 +51,13 @@ enum cc_stat {
 
 #if defined(_MSC_VER)
 
-#define       INLINE __inline
-#define FORCE_INLINE __forceinline
+#define       CC_INLINE __inline
+#define CC_FORCE_INLINE __forceinline
 
 #else
 
-#define       INLINE inline
-#define FORCE_INLINE inline __attribute__((always_inline))
+#define       CC_INLINE inline
+#define CC_FORCE_INLINE inline __attribute__((always_inline))
 
 #endif /* _MSC_VER */
 

@@ -442,7 +442,7 @@ static enum cc_stat resize(CC_HashTable *t, size_t new_capacity)
  *
  * @return the nearest upper power of two.
  */
-static INLINE size_t round_pow_two(size_t n)
+static CC_INLINE size_t round_pow_two(size_t n)
 {
     if (n >= MAX_POW_TWO)
         return MAX_POW_TWO;
@@ -474,7 +474,7 @@ static INLINE size_t round_pow_two(size_t n)
  * @param[in] src_size    size of the source bucket
  * @param[in] dest_size   size of the destination bucket
  */
-static INLINE void
+static CC_INLINE void
 move_entries(TableEntry **src_bucket, TableEntry **dest_bucket,
              size_t       src_size,   size_t       dest_size)
 {
@@ -628,7 +628,7 @@ enum cc_stat cc_hashtable_get_keys(CC_HashTable *table, CC_Array **out)
 /**
  * Returns the bucket index that maps to the specified key.
  */
-static INLINE size_t get_table_index(CC_HashTable *table, void *key)
+static CC_INLINE size_t get_table_index(CC_HashTable *table, void *key)
 {
     size_t hash = table->hash(key, table->key_len, table->hash_seed);
     return hash & (table->capacity - 1);
@@ -797,12 +797,12 @@ size_t cc_hashtable_hash_string(const void *key, int len, uint32_t seed)
 
 #else
 
-FORCE_INLINE uint32_t rotl32(uint32_t x, int8_t r)
+CC_FORCE_INLINE uint32_t rotl32(uint32_t x, int8_t r)
 {
     return (x << r) | (x >> (32 - r));
 }
 
-FORCE_INLINE uint64_t rotl64(uint64_t x, int8_t r)
+CC_FORCE_INLINE uint64_t rotl64(uint64_t x, int8_t r)
 {
     return (x << r) | (x >> (64 - r));
 }
@@ -822,7 +822,7 @@ FORCE_INLINE uint64_t rotl64(uint64_t x, int8_t r)
 #ifdef ARCH_64
 
 
-FORCE_INLINE uint64_t fmix64(uint64_t k)
+CC_FORCE_INLINE uint64_t fmix64(uint64_t k)
 {
     k ^= k >> 33;
     k *= BIG_CONSTANT(0xff51afd7ed558ccd);
@@ -968,7 +968,7 @@ uint64_t cc_hashtable_hash_ptr(const void *key, int len, uint32_t seed)
  ****************************************************************************/
 #else
 
-FORCE_INLINE uint32_t fmix32(uint32_t h)
+CC_FORCE_INLINE uint32_t fmix32(uint32_t h)
 {
     h ^= h >> 16;
     h *= 0x85ebca6b;

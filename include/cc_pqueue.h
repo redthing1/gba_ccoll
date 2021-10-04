@@ -69,6 +69,7 @@ void          cc_pqueue_destroy_cb      (CC_PQueue *pqueue, void (*cb) (void*));
 enum cc_stat  cc_pqueue_push            (CC_PQueue *pqueue, void *element);
 enum cc_stat  cc_pqueue_top             (CC_PQueue *pqueue, void **out);
 enum cc_stat  cc_pqueue_pop             (CC_PQueue *pqueue, void **out);
+void cc_pqueue_heapify(CC_PQueue *pq, size_t index, bool force);
 
 
 #endif

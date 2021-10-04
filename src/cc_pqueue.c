@@ -46,9 +46,6 @@ struct cc_pqueue_s {
 };
 
 
-static void cc_pqueue_heapify(CC_PQueue *pqueue, size_t index);
-
-
 /**
  * Initializes the fields of CC_PQueueConf to default values
  *
@@ -283,7 +280,7 @@ enum cc_stat cc_pqueue_pop(CC_PQueue *pq, void **out)
     tmp = pq->buffer[pq->size - 1];
     pq->size--;
 
-    cc_pqueue_heapify(pq, 0);
+    cc_pqueue_heapify(pq, 0, false);
 
     if (out)
         *out = tmp;
@@ -297,7 +294,7 @@ enum cc_stat cc_pqueue_pop(CC_PQueue *pq, void **out)
  * @param[in] pq the CC_PQueue structure whose heap property is to be maintained
  * @param[in] index the index from where we need to apply this operation
  */
-static void cc_pqueue_heapify(CC_PQueue *pq, size_t index)
+void cc_pqueue_heapify(CC_PQueue *pq, size_t index, bool force)
 {
     if (pq->size <= 1)
         return;
@@ -325,6 +322,9 @@ static void cc_pqueue_heapify(CC_PQueue *pq, size_t index)
         pq->buffer[tmp] = pq->buffer[index];
         pq->buffer[index] = swap_tmp;
 
-        cc_pqueue_heapify(pq, index);
+        cc_pqueue_heapify(pq, index, force);
+    } else if (force) {
+        if (L < pq->size) cc_pqueue_heapify(pq, L, force);
+        if (R < pq->size) cc_pqueue_heapify(pq, R, force);
     }
 }

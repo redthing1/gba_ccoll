@@ -32,6 +32,21 @@
 
 typedef struct cc_pqueue_s CC_PQueue;
 
+struct cc_pqueue_s {
+    size_t   size;
+    size_t   capacity;
+    float    exp_factor;
+    void   **buffer;
+
+    /* Memory management function pointers */
+    void *(*mem_alloc)  (size_t size);
+    void *(*mem_calloc) (size_t blocks, size_t size);
+    void  (*mem_free)   (void *block);
+
+    /*  Comparator function pointer, for compairing the elements of CC_PQueue */
+    int   (*cmp) (const void *a, const void *b);
+};
+
 /**
  * The pqueue initialization configuration structure. Used to initialize the
  * CC_PQueue with the specified attributes
@@ -70,6 +85,6 @@ enum cc_stat  cc_pqueue_push            (CC_PQueue *pqueue, void *element);
 enum cc_stat  cc_pqueue_top             (CC_PQueue *pqueue, void **out);
 enum cc_stat  cc_pqueue_pop             (CC_PQueue *pqueue, void **out);
 void cc_pqueue_heapify(CC_PQueue *pq, size_t index, bool force);
-
+void cc_pqueue_percolate(CC_PQueue *pq, size_t index);
 
 #endif

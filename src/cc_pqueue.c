@@ -30,22 +30,6 @@
 #define DEFAULT_EXPANSION_FACTOR 2
 
 
-struct cc_pqueue_s {
-    size_t   size;
-    size_t   capacity;
-    float    exp_factor;
-    void   **buffer;
-
-    /* Memory management function pointers */
-    void *(*mem_alloc)  (size_t size);
-    void *(*mem_calloc) (size_t blocks, size_t size);
-    void  (*mem_free)   (void *block);
-
-    /*  Comparator function pointer, for compairing the elements of CC_PQueue */
-    int   (*cmp) (const void *a, const void *b);
-};
-
-
 /**
  * Initializes the fields of CC_PQueueConf to default values
  *
@@ -228,18 +212,7 @@ enum cc_stat cc_pqueue_push(CC_PQueue *pq, void *element)
     if (i == 0)
         return CC_OK;
 
-    void *child  = pq->buffer[i];
-    void *parent = pq->buffer[CC_PARENT(i)];
-
-    while (i != 0 && pq->cmp(child, parent) > 0) {
-        void *tmp = pq->buffer[i];
-        pq->buffer[i] = pq->buffer[CC_PARENT(i)];
-        pq->buffer[CC_PARENT(i)] = tmp;
-
-        i      = CC_PARENT(i);
-        child  = pq->buffer[i];
-        parent = pq->buffer[CC_PARENT(i)];
-    }
+    cc_pqueue_percolate(pq, i);
     return CC_OK;
 }
 
@@ -323,8 +296,24 @@ void cc_pqueue_heapify(CC_PQueue *pq, size_t index, bool force)
         pq->buffer[index] = swap_tmp;
 
         cc_pqueue_heapify(pq, index, force);
-    } else if (force) {
+    }
+    if (force) {
         if (L < pq->size) cc_pqueue_heapify(pq, L, force);
         if (R < pq->size) cc_pqueue_heapify(pq, R, force);
     }
+}
+
+void cc_pqueue_percolate(CC_PQueue *pq, size_t i) {
+    void *child  = pq->buffer[i];
+    void *parent = pq->buffer[CC_PARENT(i)];
+
+    while (i != 0 && pq->cmp(child, parent) > 0) {
+        void *tmp = pq->buffer[i];
+        pq->buffer[i] = pq->buffer[CC_PARENT(i)];
+        pq->buffer[CC_PARENT(i)] = tmp;
+
+        i      = CC_PARENT(i);
+        child  = pq->buffer[i];
+        parent = pq->buffer[CC_PARENT(i)];
+    }   
 }
